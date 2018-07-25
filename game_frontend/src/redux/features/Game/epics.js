@@ -1,16 +1,16 @@
 import actions from './actions'
 import types from './types'
-import { Observable } from 'rxjs'
+import { of } from 'rxjs'
 import { map, mergeMap, catchError } from 'rxjs/operators'
 import { ofType } from 'redux-observable'
 
-const getConnectionParametersEpic = (action$, store, { api }) => {
+const getConnectionParametersEpic = (action$, store$, { api }) => {
   return action$.pipe(
     ofType(types.GET_CONNECTION_PARAMETERS_REQUEST),
     mergeMap(action =>
-      api.get(`games/${store.getState().game.connectionParameters.id}/connection_parameters/`).pipe(
+      api.get(`games/${store$.value.game.connectionParameters.id}/connection_parameters/`).pipe(
         map(response => actions.getConnectionParametersSuccess(response)),
-        catchError(error => Observable.of({
+        catchError(error => of({
           type: types.GET_CONNECTION_PARAMETERS_FAIL,
           payload: error,
           error: true
