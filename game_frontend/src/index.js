@@ -19,9 +19,6 @@ WebFont.load({
 })
 
 const initialState = {
-  ghibli: {
-    movies: []
-  },
   editor: {
     code: ''
   },
