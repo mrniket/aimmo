@@ -30,4 +30,14 @@ describe('consoleLogReducer', () => {
     expect(actualState.logs).toHaveLength(MAX_NUMBER_OF_STORED_LOGS)
     expect(actualState.logs[MAX_NUMBER_OF_STORED_LOGS - 1].log).toEqual(newLogMessage)
   })
+
+  it('should not add empty logs', () => {
+    let initialLogs = Array(10).fill({ timestamp: '1', log: 'Same old logs' })
+    
+    const initialState = { logs: initialLogs }
+    const action = actions.socketConsoleLogReceived(null)
+    const actualState = consoleLogReducer(initialState, action)
+
+    expect(actualState.logs).toHaveLength(10)
+  })
 })
